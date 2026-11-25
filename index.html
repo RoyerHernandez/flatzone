@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>FlatZone — Propuesta Económica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app-layout">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2><span class="material-symbols-rounded" style="font-size:22px">apartment</span> FLATZONE</h2>
+                <button class="sidebar-toggle" id="sidebarToggle" title="Colapsar">
+                    <span class="material-symbols-rounded" style="font-size:20px">menu</span>
+                </button>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" data-page="dashboard" class="nav-link active">
+                    <span class="nav-icon material-symbols-rounded">dashboard</span>
+                    <span class="nav-text">Resumen</span>
+                </a></li>
+                <li><a href="#" data-page="inversion" class="nav-link">
+                    <span class="nav-icon material-symbols-rounded">account_balance</span>
+                    <span class="nav-text">Plan de Inversión</span>
+                </a></li>
+                <li><a href="#" data-page="ingresos" class="nav-link">
+                    <span class="nav-icon material-symbols-rounded">trending_up</span>
+                    <span class="nav-text">Ingresos Proyectados</span>
+                </a></li>
+                <li><a href="#" data-page="costos" class="nav-link">
+                    <span class="nav-icon material-symbols-rounded">receipt_long</span>
+                    <span class="nav-text">Estructura de Costos</span>
+                </a></li>
+                <li><a href="#" data-page="cronograma" class="nav-link">
+                    <span class="nav-icon material-symbols-rounded">calendar_month</span>
+                    <span class="nav-text">Cronograma</span>
+                </a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="sidebar-footer-info">
+                    <div class="sidebar-footer-name">FlatZone S.A.S.</div>
+                    <div class="sidebar-footer-email">Propuesta Económica · 2025</div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main -->
+        <div class="main-area">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="btn-icon mobile-menu-btn" id="mobileMenuBtn">
+                        <span class="material-symbols-rounded" style="font-size:22px">menu</span>
+                    </button>
+                    <span id="topbarDate"></span>
+                </div>
+                <div class="topbar-right">
+                    <div class="currency-switcher" title="Cambiar moneda">
+                        <button class="currency-btn active" id="btnCOP" onclick="switchCurrency('COP')">COP</button>
+                        <button class="currency-btn" id="btnUSD" onclick="switchCurrency('USD')">USD</button>
+                    </div>
+                    <button class="theme-toggle" id="themeToggle" title="Cambiar tema">🌙</button>
+                </div>
+            </header>
+
+            <main class="main-content">
+                <div id="app-content"></div>
+            </main>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="lib/chart.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/modules/dashboard.js"></script>
+    <script src="js/modules/inversion.js"></script>
+    <script src="js/modules/ingresos.js"></script>
+    <script src="js/modules/costos.js"></script>
+    <script src="js/modules/cronograma.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
