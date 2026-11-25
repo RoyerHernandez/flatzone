@@ -17,7 +17,7 @@ const PROPERTIES = [
         img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&h=400&fit=crop',
         agente: { nombre: 'Carlos Rodríguez', tel: '573001234567' },
         badge: 'Destacado',
-        badgeColor: '#F59E0B',
+        badgeColor: '#6B9E78',
     },
     {
         id: 2,
@@ -32,7 +32,7 @@ const PROPERTIES = [
         img: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&h=400&fit=crop',
         agente: { nombre: 'Ana Martínez', tel: '573009876543' },
         badge: 'Nueva',
-        badgeColor: '#B8975A',
+        badgeColor: '#1A3A2A',
     },
     {
         id: 3,
@@ -92,7 +92,7 @@ const PROPERTIES = [
         img: 'https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?w=600&h=400&fit=crop',
         agente: { nombre: 'Ana Martínez', tel: '573009876543' },
         badge: 'Oportunidad',
-        badgeColor: '#E8572A',
+        badgeColor: '#A0634A',
     },
     {
         id: 7,
@@ -107,7 +107,7 @@ const PROPERTIES = [
         img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&h=400&fit=crop',
         agente: { nombre: 'Diego Peña', tel: '573005551234' },
         badge: 'Inversión',
-        badgeColor: '#B8975A',
+        badgeColor: '#6B9E78',
     },
     {
         id: 8,
