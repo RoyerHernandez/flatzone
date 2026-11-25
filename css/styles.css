@@ -4,21 +4,24 @@
    ===================================================== */
 
 :root {
-    --primary:     #1D4ED8;
-    --primary-dk:  #1E40AF;
-    --primary-lt:  #EFF6FF;
+    --primary:     #1A56DB;
+    --primary-dk:  #1740C9;
+    --primary-lt:  #EEF4FF;
     --green:       #059669;
     --green-lt:    #ECFDF5;
     --wa:          #25D366;
     --wa-dk:       #128C7E;
-    --amber:       #D97706;
+    --coral:       #E8572A;
+    --coral-dk:    #C94A1F;
+    --coral-lt:    #FEF0EB;
+    --amber:       #F59E0B;
     --red:         #DC2626;
 
     --text:        #0F172A;
     --soft:        #334155;
     --muted:       #64748B;
     --border:      #E2E8F0;
-    --bg:          #F8FAFC;
+    --bg:          #FAFAF8;
     --white:       #FFFFFF;
     --dark:        #0C1A2E;
     --dark2:       #0F2744;
@@ -321,7 +324,7 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     align-items: center;
     gap: 8px;
-    background: var(--primary);
+    background: var(--coral);
     color: #fff;
     border: none;
     font-family: inherit;
@@ -335,7 +338,7 @@ a { text-decoration: none; color: inherit; }
     margin-left: 12px;
     flex-shrink: 0;
 }
-.btn-search:hover { background: var(--primary-dk); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(29,78,216,0.3); }
+.btn-search:hover { background: var(--coral-dk); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(232,87,42,0.35); }
 
 /* Quick cats */
 .hero-cats {
@@ -639,9 +642,9 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     align-items: center;
     gap: 5px;
-    background: #ECFDF5;
-    color: #065F46;
-    border: 1px solid #A7F3D0;
+    background: var(--coral-lt);
+    color: var(--coral-dk);
+    border: 1px solid rgba(232,87,42,0.25);
     font-family: inherit;
     font-size: 0.75rem;
     font-weight: 600;
@@ -651,7 +654,7 @@ a { text-decoration: none; color: inherit; }
     white-space: nowrap;
     cursor: pointer;
 }
-.btn-wa-card:hover { background: var(--wa); color: #fff; border-color: var(--wa); }
+.btn-wa-card:hover { background: var(--coral); color: #fff; border-color: var(--coral); }
 
 /* =====================================================
    EMPTY STATE
@@ -669,7 +672,7 @@ a { text-decoration: none; color: inherit; }
 .empty-state a { color: var(--primary); font-weight: 600; }
 
 .btn-primary {
-    background: var(--primary);
+    background: var(--coral);
     color: #fff;
     border: none;
     font-family: inherit;
@@ -681,7 +684,7 @@ a { text-decoration: none; color: inherit; }
     transition: all .2s;
     margin-top: 8px;
 }
-.btn-primary:hover { background: var(--primary-dk); }
+.btn-primary:hover { background: var(--coral-dk); }
 
 /* =====================================================
    QUIERO VENDER (DARK)

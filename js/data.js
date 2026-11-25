@@ -17,7 +17,7 @@ const PROPERTIES = [
         img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&h=400&fit=crop',
         agente: { nombre: 'Carlos Rodríguez', tel: '573001234567' },
         badge: 'Destacado',
-        badgeColor: '#1D4ED8',
+        badgeColor: '#F59E0B',
     },
     {
         id: 2,
