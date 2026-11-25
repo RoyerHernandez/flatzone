@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OurHome — Propuesta Económica No. 001-2026</title>
-    <meta name="description" content="Propuesta de desarrollo de software para OurHome, plataforma web inmobiliaria. Catálogo, gestión de leads, panel admin. Bogotá, Colombia.">
+    <title>OurHome — Venta y Arriendo de Inmuebles en Bogotá</title>
+    <meta name="description" content="Encuentra apartamentos, casas, lotes y locales en venta y arriendo en Bogotá. Contáctanos por WhatsApp y encuentra tu hogar ideal.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -12,460 +12,340 @@
 </head>
 <body>
 
-    <!-- NAV -->
-    <nav class="nav" id="nav">
-        <div class="nav-inner">
-            <a class="nav-logo" href="#hero" onclick="scrollTo('hero')">
-                <div class="nav-logo-mark">OH</div>
-                <span>OurHome</span>
-            </a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#resumen"      onclick="scrollTo('resumen')">Resumen</a></li>
-                <li><a href="#modulos"      onclick="scrollTo('modulos')">Módulos</a></li>
-                <li><a href="#stack"        onclick="scrollTo('stack')">Stack</a></li>
-                <li><a href="#cronograma"   onclick="scrollTo('cronograma')">Cronograma</a></li>
-                <li><a href="#comparativo"  onclick="scrollTo('comparativo')">Comparativo</a></li>
-                <li><a href="#entregables"  onclick="scrollTo('entregables')">Entregables</a></li>
-            </ul>
-            <div class="nav-actions">
-                <div class="cur-toggle">
-                    <button id="btnCOP" class="cur-btn active" onclick="switchCurrency('COP')">COP</button>
-                    <button id="btnUSD" class="cur-btn"        onclick="switchCurrency('USD')">USD</button>
+<!-- ====================================================
+     NAVBAR
+     ==================================================== -->
+<nav class="nav" id="nav">
+    <div class="nav-inner">
+        <a class="nav-logo" href="#">
+            <div class="logo-mark">OH</div>
+            <span class="logo-name">OurHome</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#catalogo" class="active" onclick="closeMobileNav()">Comprar</a></li>
+            <li><a href="#arriendo" onclick="closeMobileNav()">Arrendar</a></li>
+            <li><a href="#vender" onclick="closeMobileNav()">Quiero vender</a></li>
+            <li><a href="#como-funciona" onclick="closeMobileNav()">¿Cómo funciona?</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a class="btn-nav-secondary" href="#vender">Publicar inmueble</a>
+            <button class="mobile-toggle" id="mobileToggle" onclick="toggleNav()">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- ====================================================
+     HERO
+     ==================================================== -->
+<section class="hero" id="hero">
+    <div class="hero-bg-shapes">
+        <div class="hbs hbs-1"></div>
+        <div class="hbs hbs-2"></div>
+    </div>
+    <div class="hero-inner">
+        <div class="hero-text">
+            <div class="hero-badge">🏙️ Bogotá, Colombia</div>
+            <h1 class="hero-title">Encuentra tu hogar<br>ideal en <em>Bogotá</em></h1>
+            <p class="hero-sub">Más de <strong id="heroCount">120</strong> inmuebles en venta y arriendo.<br>Contáctanos directo por WhatsApp.</p>
+        </div>
+
+        <!-- SEARCH BAR -->
+        <div class="search-box" id="searchBox">
+            <div class="search-tabs">
+                <button class="stab active" data-trans="Venta" onclick="setTab(this,'Venta')">Comprar</button>
+                <button class="stab" data-trans="Arriendo" onclick="setTab(this,'Arriendo')">Arrendar</button>
+            </div>
+            <div class="search-filters">
+                <div class="sf-group">
+                    <label class="sf-label">Tipo de inmueble</label>
+                    <select class="sf-select" id="filterTipo" onchange="applyFilters()">
+                        <option value="">Todos</option>
+                        <option value="Apartamento">Apartamento</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Lote">Lote</option>
+                        <option value="Local">Local</option>
+                    </select>
                 </div>
-                <button class="nav-mobile-btn" id="mobileBtn" onclick="toggleMobileNav()">
-                    <span></span><span></span><span></span>
+                <div class="sf-sep"></div>
+                <div class="sf-group">
+                    <label class="sf-label">Zona / Barrio</label>
+                    <select class="sf-select" id="filterZona" onchange="applyFilters()">
+                        <option value="">Todas las zonas</option>
+                        <option value="Chapinero">Chapinero</option>
+                        <option value="Usaquén">Usaquén</option>
+                        <option value="Rosales">El Rosales</option>
+                        <option value="Cedritos">Cedritos</option>
+                        <option value="Santa Bárbara">Santa Bárbara</option>
+                        <option value="Quinta Camacho">Quinta Camacho</option>
+                        <option value="Suba">Suba</option>
+                        <option value="Kennedy">Kennedy</option>
+                        <option value="Modelia">Modelia</option>
+                        <option value="Salitre">Salitre</option>
+                        <option value="La Calera">La Calera</option>
+                    </select>
+                </div>
+                <div class="sf-sep"></div>
+                <div class="sf-group">
+                    <label class="sf-label">Habitaciones</label>
+                    <select class="sf-select" id="filterHab" onchange="applyFilters()">
+                        <option value="">Cualquiera</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4+</option>
+                    </select>
+                </div>
+                <div class="sf-sep"></div>
+                <div class="sf-group">
+                    <label class="sf-label">Precio máx.</label>
+                    <select class="sf-select" id="filterPrecio" onchange="applyFilters()">
+                        <option value="">Sin límite</option>
+                        <option value="300000000">Hasta $300M</option>
+                        <option value="500000000">Hasta $500M</option>
+                        <option value="800000000">Hasta $800M</option>
+                        <option value="1200000000">Hasta $1.200M</option>
+                        <option value="4000000" data-trans="Arriendo">Hasta $4M/mes</option>
+                        <option value="8000000" data-trans="Arriendo">Hasta $8M/mes</option>
+                    </select>
+                </div>
+                <button class="btn-search" onclick="applyFilters()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    Buscar
                 </button>
             </div>
         </div>
-    </nav>
 
-    <!-- =====================================================
-         HERO
-         ===================================================== -->
-    <section class="hero" id="hero">
-        <div class="hero-bg">
-            <div class="hero-shape shape-1"></div>
-            <div class="hero-shape shape-2"></div>
-            <div class="hero-shape shape-3"></div>
+        <!-- Quick categories -->
+        <div class="hero-cats">
+            <button class="hcat" onclick="quickFilter('Apartamento')">🏢 Apartamentos</button>
+            <button class="hcat" onclick="quickFilter('Casa')">🏡 Casas</button>
+            <button class="hcat" onclick="quickFilter('Local')">🏪 Locales</button>
+            <button class="hcat" onclick="quickFilter('Lote')">📐 Lotes</button>
         </div>
-        <div class="hero-content">
-            <div class="hero-eyebrow">
-                <div class="hero-eyebrow-dot"></div>
-                Propuesta Económica No. 001-2026
+    </div>
+</section>
+
+<!-- ====================================================
+     STATS BAR
+     ==================================================== -->
+<div class="stats-bar">
+    <div class="stats-bar-inner">
+        <div class="stat-item">
+            <strong id="statVenta">0</strong>
+            <span>en venta</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat-item">
+            <strong id="statArr">0</strong>
+            <span>en arriendo</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat-item">
+            <strong>11</strong>
+            <span>zonas de Bogotá</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat-item">
+            <strong>3</strong>
+            <span>agentes activos</span>
+        </div>
+    </div>
+</div>
+
+<!-- ====================================================
+     CATÁLOGO
+     ==================================================== -->
+<section class="section" id="catalogo">
+    <div class="container">
+        <div class="catalog-header">
+            <div class="catalog-header-left">
+                <h2 class="section-title" id="catalogTitle">Inmuebles disponibles</h2>
+                <span class="result-count" id="resultCount"></span>
             </div>
-            <h1 class="hero-title">La plataforma que tu<br>agencia inmobiliaria<br><em>necesita</em></h1>
-            <p class="hero-desc">Diseño y desarrollo de OurHome: catálogo web, panel de leads, gestión de propiedades y landing institucional. Bogotá, listo en 12 semanas.</p>
-            <div class="hero-cta">
-                <button class="btn-primary" onclick="scrollTo('modulos')">Ver módulos y precios</button>
-                <button class="btn-ghost" onclick="scrollTo('comparativo')">Comparar con el mercado</button>
+            <div class="catalog-header-right">
+                <select class="sort-select" id="sortSelect" onchange="applyFilters()">
+                    <option value="default">Más recientes</option>
+                    <option value="precio-asc">Menor precio</option>
+                    <option value="precio-desc">Mayor precio</option>
+                    <option value="m2-desc">Mayor área</option>
+                </select>
             </div>
         </div>
 
-        <div class="hero-stats">
-            <div class="hstat">
-                <div class="hstat-num" data-target="8860" data-prefix="$" data-suffix=" USD">$0 USD</div>
-                <div class="hstat-label">Inversión total</div>
-                <div class="hstat-sub">$27,997,600 COP</div>
-            </div>
-            <div class="hstat">
-                <div class="hstat-num" data-target="12" data-suffix=" sem">0 sem</div>
-                <div class="hstat-label">Duración</div>
-                <div class="hstat-sub">4 fases · entrega productiva</div>
-            </div>
-            <div class="hstat">
-                <div class="hstat-num" data-target="7" data-suffix="">0</div>
-                <div class="hstat-label">Módulos</div>
-                <div class="hstat-sub">3 roles · equipo completo</div>
-            </div>
-            <div class="hstat">
-                <div class="hstat-num" data-target="58" data-suffix="%+">0%+</div>
-                <div class="hstat-label">Ahorro vs mercado</div>
-                <div class="hstat-sub">vs $21K–$48K USD</div>
-            </div>
+        <!-- Active filters bar -->
+        <div class="active-filters" id="activeFilters" style="display:none"></div>
+
+        <!-- Grid -->
+        <div class="prop-grid" id="propGrid"></div>
+
+        <!-- Empty state -->
+        <div class="empty-state" id="emptyState" style="display:none">
+            <div class="empty-icon">🔍</div>
+            <h3>Sin resultados</h3>
+            <p>No encontramos inmuebles con esos filtros.<br>Intenta con otras opciones o <a href="#vender">contáctanos</a>.</p>
+            <button class="btn-primary" onclick="clearFilters()">Limpiar filtros</button>
         </div>
+    </div>
+</section>
 
-        <div class="hero-scroll" onclick="scrollTo('resumen')">
-            <div class="scroll-line"></div>
-            <span>Explorar</span>
-        </div>
-    </section>
+<!-- ====================================================
+     ARRIENDO ANCHOR
+     ==================================================== -->
+<div id="arriendo" style="height:0;visibility:hidden"></div>
 
-    <!-- =====================================================
-         RESUMEN
-         ===================================================== -->
-    <section class="section light" id="resumen">
-        <div class="container">
-            <div class="section-header fade-up">
-                <div class="section-tag">El Proyecto</div>
-                <h2 class="section-title">¿Qué es OurHome?</h2>
-                <p class="section-desc">Una plataforma web inmobiliaria completa para vender propiedades en Bogotá a través de agentes propios y contratados. Lanzamiento rápido, validación real, escala posterior.</p>
-            </div>
-
-            <div class="resumen-layout">
-                <div class="resumen-about fade-up">
-                    <h3>Objetivo del proyecto</h3>
-                    <p>Construir la infraestructura digital que OurHome necesita para operar: desde que un comprador llega al sitio hasta que un agente cierra la negociación. Todo en una sola plataforma, integrada, rápida y mantenible.</p>
-                    <p>El sistema cubre el ciclo completo: captación de compradores y vendedores, gestión interna de leads, publicación de inmuebles y comunicación automatizada vía email y WhatsApp.</p>
-                    <div class="resumen-tags">
-                        <span class="resumen-tag">Next.js 14 + TypeScript</span>
-                        <span class="resumen-tag">Go API REST</span>
-                        <span class="resumen-tag">PostgreSQL + Supabase</span>
-                        <span class="resumen-tag">Vercel + Railway</span>
-                        <span class="resumen-tag">SEO optimizado</span>
-                        <span class="resumen-tag">Mobile-first</span>
-                    </div>
-                </div>
-
-                <div class="doc-info-table fade-up" style="transition-delay:80ms">
-                    <div class="doc-info-row">
-                        <div class="doc-info-label">Documento</div>
-                        <div class="doc-info-val">Propuesta Económica No. 001-2026</div>
-                    </div>
-                    <div class="doc-info-row">
-                        <div class="doc-info-label">Fecha</div>
-                        <div class="doc-info-val">10 de noviembre de 2026</div>
-                    </div>
-                    <div class="doc-info-row">
-                        <div class="doc-info-label">Versión</div>
-                        <div class="doc-info-val">1.0</div>
-                    </div>
-                    <div class="doc-info-row">
-                        <div class="doc-info-label">Vigencia</div>
-                        <div class="doc-info-val">90 días calendario</div>
-                    </div>
-                    <div class="doc-info-row">
-                        <div class="doc-info-label">TRM referencia</div>
-                        <div class="doc-info-val">$3,160 COP/USD (Nov 10, 2026)</div>
-                    </div>
-                    <div class="doc-info-row">
-                        <div class="doc-info-label">Total USD</div>
-                        <div class="doc-info-val price-highlight" data-total>$8,860 USD</div>
-                    </div>
-                    <div class="doc-info-row">
-                        <div class="doc-info-label">Total COP</div>
-                        <div class="doc-info-val price-highlight">$27,997,600 COP</div>
-                    </div>
-                    <div class="doc-info-row">
-                        <div class="doc-info-label">Infraestructura</div>
-                        <div class="doc-info-val green-val">$5–$40 USD / mes</div>
-                    </div>
+<!-- ====================================================
+     QUIERO VENDER
+     ==================================================== -->
+<section class="section-dark" id="vender">
+    <div class="container">
+        <div class="vender-layout">
+            <div class="vender-left">
+                <div class="section-tag-light">Para propietarios</div>
+                <h2 class="section-title-light">¿Quieres vender<br>o arrendar tu<br><em>inmueble?</em></h2>
+                <p class="vender-desc">Nuestros agentes te ayudan a vender más rápido y al mejor precio. Publicamos tu inmueble, gestionamos los leads y te mantenemos informado en todo momento.</p>
+                <div class="vender-benefits">
+                    <div class="vb"><span class="vb-icon">✓</span> Publicación inmediata</div>
+                    <div class="vb"><span class="vb-icon">✓</span> Agente exclusivo asignado</div>
+                    <div class="vb"><span class="vb-icon">✓</span> Visitas coordinadas por nosotros</div>
+                    <div class="vb"><span class="vb-icon">✓</span> Seguimiento vía WhatsApp</div>
                 </div>
             </div>
-
-            <!-- FLUJOS -->
-            <div class="section-header fade-up" style="margin-bottom:32px">
-                <div class="section-tag">Flujos funcionales</div>
-                <h2 class="section-title" style="font-size:1.8rem">Cómo funciona para cada actor</h2>
-            </div>
-
-            <div class="flows-grid">
-                <!-- Comprador -->
-                <div class="flow-card fade-up">
-                    <div class="flow-card-header">
-                        <div class="flow-card-icon buyer">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-                            </svg>
+            <div class="vender-right">
+                <div class="form-card">
+                    <h3 class="form-title">Cuéntanos sobre tu inmueble</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nombre *</label>
+                            <input type="text" placeholder="Tu nombre completo" id="fNombre">
                         </div>
-                        <div>
-                            <div class="flow-card-title">Comprador</div>
-                            <div class="flow-card-sub">Busca y contacta propiedades</div>
+                        <div class="form-group">
+                            <label>Teléfono *</label>
+                            <input type="tel" placeholder="300 000 0000" id="fTel">
                         </div>
                     </div>
-                    <div class="flow-steps" id="flujo-comprador"></div>
-                </div>
-
-                <!-- Vendedor -->
-                <div class="flow-card fade-up" style="transition-delay:80ms">
-                    <div class="flow-card-header">
-                        <div class="flow-card-icon seller">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-                            </svg>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tipo de inmueble</label>
+                            <select id="fTipo">
+                                <option>Apartamento</option>
+                                <option>Casa</option>
+                                <option>Lote</option>
+                                <option>Local</option>
+                            </select>
                         </div>
-                        <div>
-                            <div class="flow-card-title">Vendedor</div>
-                            <div class="flow-card-sub">Quiere vender su propiedad</div>
-                        </div>
-                    </div>
-                    <div class="flow-steps" id="flujo-vendedor"></div>
-                </div>
-
-                <!-- Admin -->
-                <div class="flow-card fade-up" style="transition-delay:160ms">
-                    <div class="flow-card-header">
-                        <div class="flow-card-icon admin">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="flow-card-title">Administrador</div>
-                            <div class="flow-card-sub">Gestión interna de leads</div>
+                        <div class="form-group">
+                            <label>Zona / Barrio</label>
+                            <input type="text" placeholder="Ej: Chapinero, Usaquén..." id="fZona">
                         </div>
                     </div>
-                    <div class="flow-steps" id="flujo-admin"></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Área (m²)</label>
+                            <input type="number" placeholder="Ej: 80" id="fM2">
+                        </div>
+                        <div class="form-group">
+                            <label>Precio deseado (COP)</label>
+                            <input type="text" placeholder="Ej: 450,000,000" id="fPrecio">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>¿Qué deseas hacer?</label>
+                        <div class="radio-row">
+                            <label class="radio-opt"><input type="radio" name="trans" value="Venta" checked> Vender</label>
+                            <label class="radio-opt"><input type="radio" name="trans" value="Arriendo"> Arrendar</label>
+                        </div>
+                    </div>
+                    <button class="btn-wa-form" onclick="enviarWA()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Enviar por WhatsApp
+                    </button>
+                    <p class="form-note">Tu información es privada. Te contactaremos en menos de 24 horas.</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- =====================================================
-         MÓDULOS
-         ===================================================== -->
-    <section class="section alt" id="modulos">
-        <div class="container">
-            <div class="section-header fade-up">
-                <div class="section-tag">7 módulos</div>
-                <h2 class="section-title">Alcance completo del proyecto</h2>
-                <p class="section-desc">Cada módulo es una unidad funcional entregable. El precio incluye diseño, desarrollo, pruebas e integración.</p>
+<!-- ====================================================
+     CÓMO FUNCIONA
+     ==================================================== -->
+<section class="section bg-light" id="como-funciona">
+    <div class="container">
+        <div class="section-header center">
+            <div class="section-tag">Simple y transparente</div>
+            <h2 class="section-title">¿Cómo funciona OurHome?</h2>
+        </div>
+        <div class="how-tabs">
+            <button class="how-tab active" onclick="setHowTab(this,'comprador')">Quiero comprar / arrendar</button>
+            <button class="how-tab" onclick="setHowTab(this,'vendedor')">Quiero vender / arrendar mi inmueble</button>
+        </div>
+        <div class="how-steps" id="howSteps"></div>
+    </div>
+</section>
+
+<!-- ====================================================
+     FOOTER
+     ==================================================== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-layout">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <div class="logo-mark sm">OH</div>
+                    <span>OurHome</span>
+                </div>
+                <p>Plataforma inmobiliaria para comprar, vender y arrendar en Bogotá. Conéctamos propietarios y compradores de forma directa y transparente.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="WhatsApp" class="social-btn wa">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Instagram" class="social-btn ig">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                    </a>
+                </div>
             </div>
-
-            <div class="modulos-grid" id="modulosGrid"></div>
-
-            <!-- Total banner -->
-            <div class="modulos-total fade-up">
-                <div class="modulos-total-left">
-                    <div class="modulos-total-label">Inversión total — 7 módulos</div>
-                    <div class="modulos-total-price" data-total>$27,997,600 COP</div>
-                    <div class="modulos-total-price-alt">USD $8,860 · TRM $3,160</div>
-                </div>
-                <div class="modulos-total-badges">
-                    <div class="total-badge"><span class="total-badge-icon">🗓</span> 12 semanas</div>
-                    <div class="total-badge"><span class="total-badge-icon">👥</span> 3 roles</div>
-                    <div class="total-badge"><span class="total-badge-icon">🚀</span> Deploy productivo incluido</div>
-                    <div class="total-badge"><span class="total-badge-icon">📋</span> Vigencia 90 días</div>
-                </div>
+            <div class="footer-links-col">
+                <h4>Explorar</h4>
+                <a href="#catalogo">Inmuebles en venta</a>
+                <a href="#arriendo">Inmuebles en arriendo</a>
+                <a href="#como-funciona">¿Cómo funciona?</a>
+            </div>
+            <div class="footer-links-col">
+                <h4>Propietarios</h4>
+                <a href="#vender">Publicar inmueble</a>
+                <a href="#vender">Quiero vender</a>
+                <a href="#vender">Quiero arrendar</a>
+            </div>
+            <div class="footer-links-col">
+                <h4>Contacto</h4>
+                <a href="mailto:hola@ourhome.co">hola@ourhome.co</a>
+                <a href="https://wa.me/573001234567">WhatsApp</a>
+                <span class="footer-city">📍 Bogotá, Colombia</span>
             </div>
         </div>
-    </section>
-
-    <!-- =====================================================
-         STACK TÉCNICO
-         ===================================================== -->
-    <section class="section dark-alt" id="stack">
-        <div class="container">
-            <div class="section-header fade-up">
-                <div class="section-tag dark-tag">Stack técnico</div>
-                <h2 class="section-title light-title">Tecnología que escala contigo</h2>
-                <p class="section-desc light-desc">Cada herramienta fue elegida por rendimiento, costo y escalabilidad. Sin vendor lock-in, con tier gratuito generoso para arrancar.</p>
-            </div>
-
-            <div class="stack-grid" id="stackGrid"></div>
-
-            <div class="infra-banner fade-up">
-                <div>
-                    <div class="infra-banner-label">Costo de infraestructura mensual</div>
-                    <div class="infra-banner-val">$5 – $40 USD / mes</div>
-                </div>
-                <div class="infra-divider"></div>
-                <div>
-                    <div class="infra-banner-label">vs mercado</div>
-                    <div class="infra-banner-val">$200 – $800 USD / mes</div>
-                </div>
-                <div class="infra-divider"></div>
-                <div>
-                    <div class="infra-banner-label">Ahorro en hosting</div>
-                    <div class="infra-banner-val" style="color:#60A5FA">97%+ menos</div>
-                </div>
-                <div class="infra-divider"></div>
-                <div>
-                    <div class="infra-banner-label">CI/CD</div>
-                    <div class="infra-banner-val" style="color:#A78BFA">GitHub Actions</div>
-                </div>
-                <div class="infra-divider"></div>
-                <div>
-                    <div class="infra-banner-label">Monitoreo</div>
-                    <div class="infra-banner-val" style="color:#34D399">Sentry free tier</div>
-                </div>
-            </div>
+        <div class="footer-bottom">
+            <span>© 2026 OurHome. Todos los derechos reservados.</span>
+            <span>Propuesta Económica No. 001-2026 · Demo</span>
         </div>
-    </section>
+    </div>
+</footer>
 
-    <!-- =====================================================
-         CRONOGRAMA
-         ===================================================== -->
-    <section class="section light" id="cronograma">
-        <div class="container">
-            <div class="section-header fade-up">
-                <div class="section-tag">Cronograma</div>
-                <h2 class="section-title">12 semanas · 4 fases</h2>
-                <p class="section-desc">Metodología ágil con entregas incrementales. Cada fase cierra con una demo funcional revisada con el cliente antes de continuar.</p>
-            </div>
+<!-- PROPERTY MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+    <div class="modal-card" id="modalCard" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div id="modalContent"></div>
+    </div>
+</div>
 
-            <div class="cronograma-row" id="cronogramaRow"></div>
+<!-- WA FLOAT BUTTON -->
+<a class="wa-float" href="https://wa.me/573001234567?text=Hola,%20quiero%20información%20sobre%20un%20inmueble" target="_blank" title="Escríbenos por WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
 
-            <div class="section-header fade-up" style="margin-top:64px; margin-bottom:32px">
-                <div class="section-tag">El equipo</div>
-                <h2 class="section-title" style="font-size:1.8rem">3 roles · cobertura total</h2>
-            </div>
-
-            <div class="equipo-grid" id="equipoGrid"></div>
-        </div>
-    </section>
-
-    <!-- =====================================================
-         COMPARATIVO
-         ===================================================== -->
-    <section class="section warm" id="comparativo">
-        <div class="container">
-            <div class="section-header fade-up">
-                <div class="section-tag green-tag">Comparativo de mercado</div>
-                <h2 class="section-title">58%+ de ahorro vs el mercado</h2>
-                <p class="section-desc">Precios reales de agencias y freelancers senior en Colombia y LATAM para los mismos módulos. OurHome lo entrega por menos.</p>
-            </div>
-
-            <div class="comp-header-row fade-up">
-                <div class="comp-header-cell">Servicio</div>
-                <div class="comp-header-cell">Rango de mercado</div>
-                <div class="comp-header-cell">OurHome</div>
-                <div class="comp-header-cell">Ahorro</div>
-            </div>
-            <div class="comp-table">
-                <div id="comparativoTable"></div>
-                <!-- Total row -->
-                <div class="comp-total-row fade-up">
-                    <div class="comp-concepto">TOTAL — 7 módulos</div>
-                    <div class="comp-mercado">$21,000–$48,000 USD</div>
-                    <div class="comp-oh">
-                        <div class="comp-oh-wrap">
-                            <span class="comp-oh-price" data-total>$27,997,600 COP</span>
-                        </div>
-                    </div>
-                    <div class="comp-saving">
-                        <span class="comp-saving-badge">−58%+</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Highlight box -->
-            <div class="comp-highlight-box fade-up">
-                <div class="comp-hl-stat">
-                    <div class="comp-hl-num">58%+</div>
-                    <div class="comp-hl-label">Ahorro promedio</div>
-                </div>
-                <div class="comp-hl-divider"></div>
-                <div class="comp-hl-stat">
-                    <div class="comp-hl-num">$39K+</div>
-                    <div class="comp-hl-label">USD ahorrado</div>
-                </div>
-                <div class="comp-hl-divider"></div>
-                <div class="comp-hl-stat">
-                    <div class="comp-hl-num">$8,860</div>
-                    <div class="comp-hl-label">USD precio OurHome</div>
-                </div>
-                <div class="comp-hl-divider"></div>
-                <div class="comp-hl-text">
-                    El mercado cobra entre <strong>$21,000 y $48,000 USD</strong> por los mismos módulos. OurHome los entrega por <strong>$8,860 USD</strong> con calidad de producto, no de agencia de bajo costo.
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- =====================================================
-         ENTREGABLES + FUTURAS
-         ===================================================== -->
-    <section class="section light" id="entregables">
-        <div class="container">
-            <div class="section-header fade-up">
-                <div class="section-tag amber-tag">Entregables</div>
-                <h2 class="section-title">Qué recibes al finalizar</h2>
-                <p class="section-desc">Todo lo que necesitas para operar y mantener la plataforma de forma independiente. Sin dependencias de proveedores externos.</p>
-            </div>
-
-            <div class="entregables-layout">
-                <!-- Entregables -->
-                <div class="entregables-col">
-                    <h3>
-                        <div class="col-icon blue">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                            </svg>
-                        </div>
-                        Entregables del proyecto
-                    </h3>
-                    <div class="entregables-list" id="entregablesList"></div>
-                </div>
-
-                <!-- Módulos futuros + exclusiones -->
-                <div class="entregables-col">
-                    <h3 style="margin-bottom:16px">
-                        <div class="col-icon green">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                        </div>
-                        Módulos futuros (no incluidos)
-                    </h3>
-                    <div class="futuras-list" id="futurasList"></div>
-
-                    <h3 style="margin-top:28px; margin-bottom:12px">
-                        <div class="col-icon red">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/>
-                            </svg>
-                        </div>
-                        No incluye (exclusiones)
-                    </h3>
-                    <div class="exclusiones-list" id="exclusionesList"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- =====================================================
-         FOOTER CTA
-         ===================================================== -->
-    <section class="footer-cta" id="footer">
-        <div class="container">
-            <div class="center-col">
-                <div class="footer-oh-logo">OH</div>
-                <h2 class="footer-title">¿Listo para construir<br><em>OurHome</em> juntos?</h2>
-                <p class="footer-desc">Esta propuesta está vigente por <strong>90 días calendario</strong> desde el 10 de noviembre de 2026. Contáctanos para iniciar.</p>
-
-                <div class="footer-actions">
-                    <a class="btn-primary large" href="mailto:contacto@ourhome.co">Escribir al equipo</a>
-                    <a class="btn-ghost large" href="https://wa.me/573001234567?text=Hola,%20quiero%20hablar%20sobre%20la%20propuesta%20OurHome" target="_blank" rel="noopener">WhatsApp</a>
-                </div>
-
-                <div class="footer-doc-info">
-                    <div class="footer-doc-item">
-                        <div class="footer-doc-label">Documento</div>
-                        <div class="footer-doc-val">No. 001-2026</div>
-                    </div>
-                    <div class="footer-doc-item">
-                        <div class="footer-doc-label">Fecha</div>
-                        <div class="footer-doc-val">Nov 10, 2026</div>
-                    </div>
-                    <div class="footer-doc-item">
-                        <div class="footer-doc-label">Vigencia</div>
-                        <div class="footer-doc-val">90 días</div>
-                    </div>
-                    <div class="footer-doc-item">
-                        <div class="footer-doc-label">Versión</div>
-                        <div class="footer-doc-val">1.0</div>
-                    </div>
-                    <div class="footer-doc-item">
-                        <div class="footer-doc-label">TRM</div>
-                        <div class="footer-doc-val">$3,160 COP/USD</div>
-                    </div>
-                    <div class="footer-doc-item">
-                        <div class="footer-doc-label">Total</div>
-                        <div class="footer-doc-val" data-total>$27,997,600 COP</div>
-                    </div>
-                </div>
-
-                <div class="footer-meta">
-                    <span>OurHome · Bogotá, Colombia · 2026</span>
-                    <span>Propuesta Económica No. 001-2026</span>
-                    <span>Versión 1.0</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script src="lib/chart.min.js"></script>
-    <script src="js/data.js"></script>
-    <script src="js/app.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
