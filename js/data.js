@@ -216,3 +216,37 @@ function waLink(tel, prop) {
     const msg = encodeURIComponent(`Hola, me interesa el inmueble: ${prop.tipo} en ${prop.zona} · ${fmtPrecio(prop.precio, prop.trans)}. ¿Podemos agendar una visita?`);
     return `https://wa.me/${tel}?text=${msg}`;
 }
+
+/* =====================================================
+   AGENTS & LEADS — Demo Data
+   ===================================================== */
+
+const AGENTS = [
+    { id: 1, nombre: 'Carlos Rodríguez', email: 'carlos@ourhome.co', tel: '573001234567', zonas: ['Chapinero', 'Santa Bárbara'], activo: true, color: '#1D4ED8' },
+    { id: 2, nombre: 'Ana Martínez',     email: 'ana@ourhome.co',    tel: '573009876543', zonas: ['Usaquén', 'Cedritos', 'Kennedy'], activo: true, color: '#059669' },
+    { id: 3, nombre: 'Diego Peña',       email: 'diego@ourhome.co',  tel: '573005551234', zonas: ['Rosales', 'Suba', 'Modelia'],   activo: true, color: '#7C3AED' },
+    { id: 4, nombre: 'María Torres',     email: 'maria@ourhome.co',  tel: '573008881234', zonas: ['Salitre', 'Quinta Camacho', 'La Calera'], activo: true, color: '#D97706' },
+];
+
+const LEADS = [
+    { id: 1,  nombre: 'Santiago Gómez',      email: 'sgomez@gmail.com',       tel: '3112345678', fecha: '2026-11-24', tipo: 'Venta',    zona: 'Chapinero',      presupuesto: 400000000, estado: 'Nuevo',       agente: 'Carlos Rodríguez', fuente: 'WhatsApp',  nota: '' },
+    { id: 2,  nombre: 'Laura Jiménez',        email: 'laura.j@hotmail.com',    tel: '3209876543', fecha: '2026-11-23', tipo: 'Arriendo', zona: 'Usaquén',        presupuesto: 3000000,   estado: 'Contactado',  agente: 'Ana Martínez',     fuente: 'Formulario', nota: 'Busca desde enero' },
+    { id: 3,  nombre: 'Ricardo Castro',       email: 'rcastro@outlook.com',    tel: '3155554321', fecha: '2026-11-23', tipo: 'Venta',    zona: 'Usaquén',        presupuesto: 900000000, estado: 'Visita',      agente: 'Ana Martínez',     fuente: 'Referido',  nota: 'Visita sábado 10am' },
+    { id: 4,  nombre: 'Valentina Ruiz',       email: 'vruiz@gmail.com',        tel: '3002221133', fecha: '2026-11-22', tipo: 'Venta',    zona: 'Rosales',        presupuesto: 700000000, estado: 'Negociación', agente: 'Diego Peña',       fuente: 'Portal',    nota: 'Contraoferta enviada' },
+    { id: 5,  nombre: 'Andrés Moreno',        email: 'andres.m@empresa.co',    tel: '3187776655', fecha: '2026-11-22', tipo: 'Arriendo', zona: 'Salitre',        presupuesto: 4500000,   estado: 'Cerrado',     agente: 'María Torres',     fuente: 'WhatsApp',  nota: 'Contrato firmado' },
+    { id: 6,  nombre: 'Camila Torres',        email: 'camila.t@gmail.com',     tel: '3104443322', fecha: '2026-11-21', tipo: 'Venta',    zona: 'Santa Bárbara',  presupuesto: 650000000, estado: 'Nuevo',       agente: 'Carlos Rodríguez', fuente: 'WhatsApp',  nota: '' },
+    { id: 7,  nombre: 'Felipe Vargas',        email: 'fvargas@hotmail.com',    tel: '3219998877', fecha: '2026-11-21', tipo: 'Venta',    zona: 'Cedritos',       presupuesto: 500000000, estado: 'Contactado',  agente: 'Ana Martínez',     fuente: 'Formulario', nota: '' },
+    { id: 8,  nombre: 'Isabela Forero',       email: 'iforero@gmail.com',      tel: '3131112233', fecha: '2026-11-20', tipo: 'Arriendo', zona: 'Chapinero',      presupuesto: 2500000,   estado: 'Visita',      agente: 'Carlos Rodríguez', fuente: 'Portal',    nota: 'Visita coordinada viernes' },
+    { id: 9,  nombre: 'Juan Pablo Niño',      email: 'jp.nino@empresa.co',     tel: '3006667788', fecha: '2026-11-20', tipo: 'Venta',    zona: 'Quinta Camacho', presupuesto: 850000000, estado: 'Negociación', agente: 'María Torres',     fuente: 'Referido',  nota: 'Interesado en penthouse' },
+    { id: 10, nombre: 'Daniela Ospina',       email: 'dospina@gmail.com',      tel: '3178883344', fecha: '2026-11-19', tipo: 'Venta',    zona: 'Kennedy',        presupuesto: 420000000, estado: 'Cerrado',     agente: 'Ana Martínez',     fuente: 'WhatsApp',  nota: 'Escritura en trámite' },
+    { id: 11, nombre: 'Martín Suárez',        email: 'msuarez@outlook.com',    tel: '3245556677', fecha: '2026-11-19', tipo: 'Venta',    zona: 'Modelia',        presupuesto: 310000000, estado: 'Descartado',  agente: 'Diego Peña',       fuente: 'Formulario', nota: 'Presupuesto insuficiente' },
+    { id: 12, nombre: 'Sofía Hernández',      email: 'sofia.h@gmail.com',      tel: '3121234567', fecha: '2026-11-18', tipo: 'Arriendo', zona: 'Rosales',        presupuesto: 3800000,   estado: 'Contactado',  agente: 'Diego Peña',       fuente: 'WhatsApp',  nota: '' },
+    { id: 13, nombre: 'David Beltrán',        email: 'dbeltran@empresa.co',    tel: '3089990011', fecha: '2026-11-18', tipo: 'Venta',    zona: 'Suba',           presupuesto: 280000000, estado: 'Nuevo',       agente: 'Diego Peña',       fuente: 'Portal',    nota: '' },
+    { id: 14, nombre: 'Alejandra Pedraza',    email: 'apedraza@gmail.com',     tel: '3162223344', fecha: '2026-11-17', tipo: 'Venta',    zona: 'La Calera',      presupuesto: 1200000000,estado: 'Visita',      agente: 'María Torres',     fuente: 'Referido',  nota: 'Cliente VIP, muy interesado' },
+    { id: 15, nombre: 'Tomás Guerrero',       email: 'tguerrero@hotmail.com',  tel: '3194445566', fecha: '2026-11-17', tipo: 'Arriendo', zona: 'Salitre',        presupuesto: 4200000,   estado: 'Cerrado',     agente: 'María Torres',     fuente: 'WhatsApp',  nota: 'Local comercial arrendado' },
+    { id: 16, nombre: 'Natalia Cubillos',     email: 'ncubillos@gmail.com',    tel: '3037778899', fecha: '2026-11-16', tipo: 'Venta',    zona: 'Chapinero',      presupuesto: 380000000, estado: 'Contactado',  agente: 'Carlos Rodríguez', fuente: 'Portal',    nota: '' },
+    { id: 17, nombre: 'Esteban Ramírez',      email: 'eramirez@empresa.co',    tel: '3148889900', fecha: '2026-11-15', tipo: 'Venta',    zona: 'Usaquén',        presupuesto: 820000000, estado: 'Negociación', agente: 'Ana Martínez',     fuente: 'Referido',  nota: 'Segunda visita realizada' },
+    { id: 18, nombre: 'María Puentes',        email: 'mpuentes@gmail.com',     tel: '3200001122', fecha: '2026-11-24', tipo: 'Arriendo', zona: 'Chapinero',      presupuesto: 2200000,   estado: 'Nuevo',       agente: 'Carlos Rodríguez', fuente: 'WhatsApp',  nota: '' },
+    { id: 19, nombre: 'Juliana Vargas',       email: 'jvargas@hotmail.com',    tel: '3061112233', fecha: '2026-11-14', tipo: 'Venta',    zona: 'Cedritos',       presupuesto: 520000000, estado: 'Cerrado',     agente: 'Ana Martínez',     fuente: 'Formulario', nota: 'Negociación exitosa' },
+    { id: 20, nombre: 'Carlos Mendoza',       email: 'cmendoza@empresa.co',    tel: '3172223344', fecha: '2026-11-24', tipo: 'Venta',    zona: 'Santa Bárbara',  presupuesto: 710000000, estado: 'Nuevo',       agente: 'Carlos Rodríguez', fuente: 'WhatsApp',  nota: '' },
+];
