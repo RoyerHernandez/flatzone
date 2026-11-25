@@ -32,7 +32,7 @@ const PROPERTIES = [
         img: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&h=400&fit=crop',
         agente: { nombre: 'Ana Martínez', tel: '573009876543' },
         badge: 'Nueva',
-        badgeColor: '#059669',
+        badgeColor: '#B8975A',
     },
     {
         id: 3,
@@ -107,7 +107,7 @@ const PROPERTIES = [
         img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&h=400&fit=crop',
         agente: { nombre: 'Diego Peña', tel: '573005551234' },
         badge: 'Inversión',
-        badgeColor: '#059669',
+        badgeColor: '#B8975A',
     },
     {
         id: 8,
