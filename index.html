@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlatZone — Propuesta Económica</title>
+    <title>OurHome — Propuesta Económica No. 001-2026</title>
+    <meta name="description" content="Propuesta de desarrollo de software para OurHome, plataforma web inmobiliaria. Catálogo, gestión de leads, panel admin. Bogotá, Colombia.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -15,19 +16,21 @@
     <nav class="nav" id="nav">
         <div class="nav-inner">
             <a class="nav-logo" href="#hero" onclick="scrollTo('hero')">
-                <div class="nav-logo-mark">FZ</div>
-                <span>FlatZone</span>
+                <div class="nav-logo-mark">OH</div>
+                <span>OurHome</span>
             </a>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#proyecto" onclick="scrollTo('proyecto')">El Proyecto</a></li>
-                <li><a href="#inversion" onclick="scrollTo('inversion')">Inversión</a></li>
-                <li><a href="#proyeccion" onclick="scrollTo('proyeccion')">Proyección</a></li>
-                <li><a href="#cronograma" onclick="scrollTo('cronograma')">Cronograma</a></li>
+                <li><a href="#resumen"      onclick="scrollTo('resumen')">Resumen</a></li>
+                <li><a href="#modulos"      onclick="scrollTo('modulos')">Módulos</a></li>
+                <li><a href="#stack"        onclick="scrollTo('stack')">Stack</a></li>
+                <li><a href="#cronograma"   onclick="scrollTo('cronograma')">Cronograma</a></li>
+                <li><a href="#comparativo"  onclick="scrollTo('comparativo')">Comparativo</a></li>
+                <li><a href="#entregables"  onclick="scrollTo('entregables')">Entregables</a></li>
             </ul>
             <div class="nav-actions">
                 <div class="cur-toggle">
                     <button id="btnCOP" class="cur-btn active" onclick="switchCurrency('COP')">COP</button>
-                    <button id="btnUSD" class="cur-btn" onclick="switchCurrency('USD')">USD</button>
+                    <button id="btnUSD" class="cur-btn"        onclick="switchCurrency('USD')">USD</button>
                 </div>
                 <button class="nav-mobile-btn" id="mobileBtn" onclick="toggleMobileNav()">
                     <span></span><span></span><span></span>
@@ -36,7 +39,9 @@
         </div>
     </nav>
 
-    <!-- HERO -->
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
     <section class="hero" id="hero">
         <div class="hero-bg">
             <div class="hero-shape shape-1"></div>
@@ -44,180 +49,417 @@
             <div class="hero-shape shape-3"></div>
         </div>
         <div class="hero-content">
-            <div class="hero-tag">Propuesta Económica · 2025</div>
-            <h1 class="hero-title">Co-living<br><em>premium</em> en<br>Medellín</h1>
-            <p class="hero-desc">Un modelo de negocio rentable, sostenible y escalable para el mercado de vivienda compartida de alta calidad en Colombia.</p>
+            <div class="hero-eyebrow">
+                <div class="hero-eyebrow-dot"></div>
+                Propuesta Económica No. 001-2026
+            </div>
+            <h1 class="hero-title">La plataforma que tu<br>agencia inmobiliaria<br><em>necesita</em></h1>
+            <p class="hero-desc">Diseño y desarrollo de OurHome: catálogo web, panel de leads, gestión de propiedades y landing institucional. Bogotá, listo en 12 semanas.</p>
             <div class="hero-cta">
-                <button class="btn-primary" onclick="scrollTo('proyecto')">Ver propuesta</button>
-                <button class="btn-ghost" onclick="scrollTo('proyeccion')">Proyección financiera</button>
+                <button class="btn-primary" onclick="scrollTo('modulos')">Ver módulos y precios</button>
+                <button class="btn-ghost" onclick="scrollTo('comparativo')">Comparar con el mercado</button>
             </div>
         </div>
+
         <div class="hero-stats">
-            <div class="hstat" id="hstat-roi">
-                <div class="hstat-num" data-target="18.5" data-suffix="%">0%</div>
-                <div class="hstat-label">ROI Anual</div>
+            <div class="hstat">
+                <div class="hstat-num" data-target="8860" data-prefix="$" data-suffix=" USD">$0 USD</div>
+                <div class="hstat-label">Inversión total</div>
+                <div class="hstat-sub">$27,997,600 COP</div>
             </div>
-            <div class="hstat-divider"></div>
-            <div class="hstat" id="hstat-pb">
-                <div class="hstat-num" data-target="23" data-suffix=" m">0 m</div>
-                <div class="hstat-label">Payback</div>
+            <div class="hstat">
+                <div class="hstat-num" data-target="12" data-suffix=" sem">0 sem</div>
+                <div class="hstat-label">Duración</div>
+                <div class="hstat-sub">4 fases · entrega productiva</div>
             </div>
-            <div class="hstat-divider"></div>
-            <div class="hstat" id="hstat-hab">
-                <div class="hstat-num" data-target="8" data-suffix="">0</div>
-                <div class="hstat-label">Habitaciones</div>
+            <div class="hstat">
+                <div class="hstat-num" data-target="7" data-suffix="">0</div>
+                <div class="hstat-label">Módulos</div>
+                <div class="hstat-sub">3 roles · equipo completo</div>
             </div>
-            <div class="hstat-divider"></div>
-            <div class="hstat" id="hstat-ing">
-                <div class="hstat-num" data-currency="14200000">$0</div>
-                <div class="hstat-label">Flujo neto / mes</div>
+            <div class="hstat">
+                <div class="hstat-num" data-target="58" data-suffix="%+">0%+</div>
+                <div class="hstat-label">Ahorro vs mercado</div>
+                <div class="hstat-sub">vs $21K–$48K USD</div>
             </div>
         </div>
-        <div class="hero-scroll" onclick="scrollTo('proyecto')">
+
+        <div class="hero-scroll" onclick="scrollTo('resumen')">
             <div class="scroll-line"></div>
             <span>Explorar</span>
         </div>
     </section>
 
-    <!-- EL PROYECTO -->
-    <section class="section light" id="proyecto">
+    <!-- =====================================================
+         RESUMEN
+         ===================================================== -->
+    <section class="section light" id="resumen">
         <div class="container">
-            <div class="section-header-block">
+            <div class="section-header fade-up">
                 <div class="section-tag">El Proyecto</div>
-                <h2 class="section-title">¿Qué es FlatZone?</h2>
-                <p class="section-desc">Un espacio co-living premium diseñado para profesionales y nómadas digitales que buscan calidad, comunidad y conveniencia en Medellín.</p>
+                <h2 class="section-title">¿Qué es OurHome?</h2>
+                <p class="section-desc">Una plataforma web inmobiliaria completa para vender propiedades en Bogotá a través de agentes propios y contratados. Lanzamiento rápido, validación real, escala posterior.</p>
             </div>
 
-            <div class="features-grid">
-                <div class="feature-card featured">
-                    <div class="fc-icon">🏠</div>
-                    <h3>8 habitaciones equipadas</h3>
-                    <p>Espacios privados completamente amoblados con cama, escritorio, closet y smart lock personal.</p>
-                    <div class="fc-stat">5 individuales · 3 premium</div>
-                </div>
-                <div class="feature-card">
-                    <div class="fc-icon">⚡</div>
-                    <h3>Todo incluido</h3>
-                    <p>Internet fibra óptica, agua, gas, electricidad en áreas comunes, limpieza y mantenimiento.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="fc-icon">📱</div>
-                    <h3>Gestión 100% digital</h3>
-                    <p>App de acceso, pagos, reservas y comunicación. Sin procesos físicos ni papeleo innecesario.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="fc-icon">🔒</div>
-                    <h3>Seguridad 24/7</h3>
-                    <p>Cámaras, control de acceso biométrico y monitoreo remoto del inmueble en tiempo real.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="fc-icon">🍳</div>
-                    <h3>Cocina equipada</h3>
-                    <p>Cocina compartida de alta gama con electrodomésticos de última generación y espacio de almacenaje individual.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="fc-icon">📍</div>
-                    <h3>Ubicación estratégica</h3>
-                    <p>En el corazón de Medellín, cerca a El Poblado, Laureles o El Estadio según disponibilidad.</p>
-                </div>
-            </div>
-
-            <!-- KPIs -->
-            <div class="kpis-row" id="kpisRow"></div>
-        </div>
-    </section>
-
-    <!-- INVERSIÓN -->
-    <section class="section dark" id="inversion">
-        <div class="container">
-            <div class="section-header-block light-text">
-                <div class="section-tag inverted">Plan de Inversión</div>
-                <h2 class="section-title">¿Cuánto se necesita?</h2>
-                <p class="section-desc">Capex detallado por categoría para lanzar FlatZone en su primera ubicación.</p>
-            </div>
-
-            <div class="inv-layout">
-                <div class="inv-chart-wrap">
-                    <div class="inv-total-label">Inversión Total</div>
-                    <div class="inv-total-value" id="invTotalVal">—</div>
-                    <canvas id="chartInv" width="300" height="300"></canvas>
-                    <div class="inv-legend" id="invLegend"></div>
-                </div>
-                <div class="inv-breakdown" id="invBreakdown"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PROYECCIÓN -->
-    <section class="section light" id="proyeccion">
-        <div class="container">
-            <div class="section-header-block">
-                <div class="section-tag">Proyección Financiera</div>
-                <h2 class="section-title">Los números que importan</h2>
-                <p class="section-desc">Proyección conservadora basada en tasas de ocupación reales del mercado colombiano de co-living.</p>
-            </div>
-
-            <!-- Escenarios -->
-            <div class="scenarios-row" id="scenariosRow"></div>
-
-            <!-- Charts -->
-            <div class="charts-row">
-                <div class="chart-card">
-                    <div class="chart-card-header">
-                        <h3>Ingresos vs Costos / Mes</h3>
-                        <span class="chart-tag">Base</span>
+            <div class="resumen-layout">
+                <div class="resumen-about fade-up">
+                    <h3>Objetivo del proyecto</h3>
+                    <p>Construir la infraestructura digital que OurHome necesita para operar: desde que un comprador llega al sitio hasta que un agente cierra la negociación. Todo en una sola plataforma, integrada, rápida y mantenible.</p>
+                    <p>El sistema cubre el ciclo completo: captación de compradores y vendedores, gestión interna de leads, publicación de inmuebles y comunicación automatizada vía email y WhatsApp.</p>
+                    <div class="resumen-tags">
+                        <span class="resumen-tag">Next.js 14 + TypeScript</span>
+                        <span class="resumen-tag">Go API REST</span>
+                        <span class="resumen-tag">PostgreSQL + Supabase</span>
+                        <span class="resumen-tag">Vercel + Railway</span>
+                        <span class="resumen-tag">SEO optimizado</span>
+                        <span class="resumen-tag">Mobile-first</span>
                     </div>
-                    <canvas id="chartFlow" height="260"></canvas>
                 </div>
-                <div class="chart-card">
-                    <div class="chart-card-header">
-                        <h3>Proyección Año 1</h3>
-                        <span class="chart-tag">Ramp-up</span>
+
+                <div class="doc-info-table fade-up" style="transition-delay:80ms">
+                    <div class="doc-info-row">
+                        <div class="doc-info-label">Documento</div>
+                        <div class="doc-info-val">Propuesta Económica No. 001-2026</div>
                     </div>
-                    <canvas id="chartYear" height="260"></canvas>
+                    <div class="doc-info-row">
+                        <div class="doc-info-label">Fecha</div>
+                        <div class="doc-info-val">10 de noviembre de 2026</div>
+                    </div>
+                    <div class="doc-info-row">
+                        <div class="doc-info-label">Versión</div>
+                        <div class="doc-info-val">1.0</div>
+                    </div>
+                    <div class="doc-info-row">
+                        <div class="doc-info-label">Vigencia</div>
+                        <div class="doc-info-val">90 días calendario</div>
+                    </div>
+                    <div class="doc-info-row">
+                        <div class="doc-info-label">TRM referencia</div>
+                        <div class="doc-info-val">$3,160 COP/USD (Nov 10, 2026)</div>
+                    </div>
+                    <div class="doc-info-row">
+                        <div class="doc-info-label">Total USD</div>
+                        <div class="doc-info-val price-highlight" data-total>$8,860 USD</div>
+                    </div>
+                    <div class="doc-info-row">
+                        <div class="doc-info-label">Total COP</div>
+                        <div class="doc-info-val price-highlight">$27,997,600 COP</div>
+                    </div>
+                    <div class="doc-info-row">
+                        <div class="doc-info-label">Infraestructura</div>
+                        <div class="doc-info-val green-val">$5–$40 USD / mes</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Costos detalle -->
-            <div class="cost-section">
-                <div class="cost-section-header">
-                    <h3>Estructura de costos operativos</h3>
-                    <span id="costTotal" class="cost-total-badge"></span>
+            <!-- FLUJOS -->
+            <div class="section-header fade-up" style="margin-bottom:32px">
+                <div class="section-tag">Flujos funcionales</div>
+                <h2 class="section-title" style="font-size:1.8rem">Cómo funciona para cada actor</h2>
+            </div>
+
+            <div class="flows-grid">
+                <!-- Comprador -->
+                <div class="flow-card fade-up">
+                    <div class="flow-card-header">
+                        <div class="flow-card-icon buyer">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="flow-card-title">Comprador</div>
+                            <div class="flow-card-sub">Busca y contacta propiedades</div>
+                        </div>
+                    </div>
+                    <div class="flow-steps" id="flujo-comprador"></div>
                 </div>
-                <div class="cost-bars" id="costBars"></div>
+
+                <!-- Vendedor -->
+                <div class="flow-card fade-up" style="transition-delay:80ms">
+                    <div class="flow-card-header">
+                        <div class="flow-card-icon seller">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="flow-card-title">Vendedor</div>
+                            <div class="flow-card-sub">Quiere vender su propiedad</div>
+                        </div>
+                    </div>
+                    <div class="flow-steps" id="flujo-vendedor"></div>
+                </div>
+
+                <!-- Admin -->
+                <div class="flow-card fade-up" style="transition-delay:160ms">
+                    <div class="flow-card-header">
+                        <div class="flow-card-icon admin">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="flow-card-title">Administrador</div>
+                            <div class="flow-card-sub">Gestión interna de leads</div>
+                        </div>
+                    </div>
+                    <div class="flow-steps" id="flujo-admin"></div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- CRONOGRAMA -->
-    <section class="section alt" id="cronograma">
+    <!-- =====================================================
+         MÓDULOS
+         ===================================================== -->
+    <section class="section alt" id="modulos">
         <div class="container">
-            <div class="section-header-block">
+            <div class="section-header fade-up">
+                <div class="section-tag">7 módulos</div>
+                <h2 class="section-title">Alcance completo del proyecto</h2>
+                <p class="section-desc">Cada módulo es una unidad funcional entregable. El precio incluye diseño, desarrollo, pruebas e integración.</p>
+            </div>
+
+            <div class="modulos-grid" id="modulosGrid"></div>
+
+            <!-- Total banner -->
+            <div class="modulos-total fade-up">
+                <div class="modulos-total-left">
+                    <div class="modulos-total-label">Inversión total — 7 módulos</div>
+                    <div class="modulos-total-price" data-total>$27,997,600 COP</div>
+                    <div class="modulos-total-price-alt">USD $8,860 · TRM $3,160</div>
+                </div>
+                <div class="modulos-total-badges">
+                    <div class="total-badge"><span class="total-badge-icon">🗓</span> 12 semanas</div>
+                    <div class="total-badge"><span class="total-badge-icon">👥</span> 3 roles</div>
+                    <div class="total-badge"><span class="total-badge-icon">🚀</span> Deploy productivo incluido</div>
+                    <div class="total-badge"><span class="total-badge-icon">📋</span> Vigencia 90 días</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         STACK TÉCNICO
+         ===================================================== -->
+    <section class="section dark-alt" id="stack">
+        <div class="container">
+            <div class="section-header fade-up">
+                <div class="section-tag dark-tag">Stack técnico</div>
+                <h2 class="section-title light-title">Tecnología que escala contigo</h2>
+                <p class="section-desc light-desc">Cada herramienta fue elegida por rendimiento, costo y escalabilidad. Sin vendor lock-in, con tier gratuito generoso para arrancar.</p>
+            </div>
+
+            <div class="stack-grid" id="stackGrid"></div>
+
+            <div class="infra-banner fade-up">
+                <div>
+                    <div class="infra-banner-label">Costo de infraestructura mensual</div>
+                    <div class="infra-banner-val">$5 – $40 USD / mes</div>
+                </div>
+                <div class="infra-divider"></div>
+                <div>
+                    <div class="infra-banner-label">vs mercado</div>
+                    <div class="infra-banner-val">$200 – $800 USD / mes</div>
+                </div>
+                <div class="infra-divider"></div>
+                <div>
+                    <div class="infra-banner-label">Ahorro en hosting</div>
+                    <div class="infra-banner-val" style="color:#60A5FA">97%+ menos</div>
+                </div>
+                <div class="infra-divider"></div>
+                <div>
+                    <div class="infra-banner-label">CI/CD</div>
+                    <div class="infra-banner-val" style="color:#A78BFA">GitHub Actions</div>
+                </div>
+                <div class="infra-divider"></div>
+                <div>
+                    <div class="infra-banner-label">Monitoreo</div>
+                    <div class="infra-banner-val" style="color:#34D399">Sentry free tier</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         CRONOGRAMA
+         ===================================================== -->
+    <section class="section light" id="cronograma">
+        <div class="container">
+            <div class="section-header fade-up">
                 <div class="section-tag">Cronograma</div>
-                <h2 class="section-title">De la idea a la operación</h2>
-                <p class="section-desc">12 meses para ir de cero a un co-living completamente operativo con ocupación plena.</p>
+                <h2 class="section-title">12 semanas · 4 fases</h2>
+                <p class="section-desc">Metodología ágil con entregas incrementales. Cada fase cierra con una demo funcional revisada con el cliente antes de continuar.</p>
             </div>
 
-            <div class="timeline-row" id="timelineRow"></div>
+            <div class="cronograma-row" id="cronogramaRow"></div>
 
-            <!-- Hitos -->
-            <div class="milestones" id="milestones"></div>
+            <div class="section-header fade-up" style="margin-top:64px; margin-bottom:32px">
+                <div class="section-tag">El equipo</div>
+                <h2 class="section-title" style="font-size:1.8rem">3 roles · cobertura total</h2>
+            </div>
+
+            <div class="equipo-grid" id="equipoGrid"></div>
         </div>
     </section>
 
-    <!-- FOOTER CTA -->
-    <section class="section footer-cta">
-        <div class="container center-col">
-            <div class="footer-brand">FZ</div>
-            <h2 class="footer-title">¿Listo para hacer parte<br>de <em>FlatZone</em>?</h2>
-            <p class="footer-desc">Esta propuesta está vigente hasta el <strong>31 de diciembre de 2025</strong>. Contáctanos para agendar una reunión.</p>
-            <div class="footer-actions">
-                <a class="btn-primary large" href="mailto:contacto@flatzone.co">Escribir al equipo</a>
-                <a class="btn-ghost large" href="https://github.com/RoyerHernandez/flatzone" target="_blank">Ver repositorio</a>
+    <!-- =====================================================
+         COMPARATIVO
+         ===================================================== -->
+    <section class="section warm" id="comparativo">
+        <div class="container">
+            <div class="section-header fade-up">
+                <div class="section-tag green-tag">Comparativo de mercado</div>
+                <h2 class="section-title">58%+ de ahorro vs el mercado</h2>
+                <p class="section-desc">Precios reales de agencias y freelancers senior en Colombia y LATAM para los mismos módulos. OurHome lo entrega por menos.</p>
             </div>
-            <div class="footer-meta">
-                <span>FlatZone S.A.S. · Medellín, Colombia · 2025</span>
-                <span>Versión 1.0 de la Propuesta Económica</span>
+
+            <div class="comp-header-row fade-up">
+                <div class="comp-header-cell">Servicio</div>
+                <div class="comp-header-cell">Rango de mercado</div>
+                <div class="comp-header-cell">OurHome</div>
+                <div class="comp-header-cell">Ahorro</div>
+            </div>
+            <div class="comp-table">
+                <div id="comparativoTable"></div>
+                <!-- Total row -->
+                <div class="comp-total-row fade-up">
+                    <div class="comp-concepto">TOTAL — 7 módulos</div>
+                    <div class="comp-mercado">$21,000–$48,000 USD</div>
+                    <div class="comp-oh">
+                        <div class="comp-oh-wrap">
+                            <span class="comp-oh-price" data-total>$27,997,600 COP</span>
+                        </div>
+                    </div>
+                    <div class="comp-saving">
+                        <span class="comp-saving-badge">−58%+</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Highlight box -->
+            <div class="comp-highlight-box fade-up">
+                <div class="comp-hl-stat">
+                    <div class="comp-hl-num">58%+</div>
+                    <div class="comp-hl-label">Ahorro promedio</div>
+                </div>
+                <div class="comp-hl-divider"></div>
+                <div class="comp-hl-stat">
+                    <div class="comp-hl-num">$39K+</div>
+                    <div class="comp-hl-label">USD ahorrado</div>
+                </div>
+                <div class="comp-hl-divider"></div>
+                <div class="comp-hl-stat">
+                    <div class="comp-hl-num">$8,860</div>
+                    <div class="comp-hl-label">USD precio OurHome</div>
+                </div>
+                <div class="comp-hl-divider"></div>
+                <div class="comp-hl-text">
+                    El mercado cobra entre <strong>$21,000 y $48,000 USD</strong> por los mismos módulos. OurHome los entrega por <strong>$8,860 USD</strong> con calidad de producto, no de agencia de bajo costo.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         ENTREGABLES + FUTURAS
+         ===================================================== -->
+    <section class="section light" id="entregables">
+        <div class="container">
+            <div class="section-header fade-up">
+                <div class="section-tag amber-tag">Entregables</div>
+                <h2 class="section-title">Qué recibes al finalizar</h2>
+                <p class="section-desc">Todo lo que necesitas para operar y mantener la plataforma de forma independiente. Sin dependencias de proveedores externos.</p>
+            </div>
+
+            <div class="entregables-layout">
+                <!-- Entregables -->
+                <div class="entregables-col">
+                    <h3>
+                        <div class="col-icon blue">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                            </svg>
+                        </div>
+                        Entregables del proyecto
+                    </h3>
+                    <div class="entregables-list" id="entregablesList"></div>
+                </div>
+
+                <!-- Módulos futuros + exclusiones -->
+                <div class="entregables-col">
+                    <h3 style="margin-bottom:16px">
+                        <div class="col-icon green">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                        Módulos futuros (no incluidos)
+                    </h3>
+                    <div class="futuras-list" id="futurasList"></div>
+
+                    <h3 style="margin-top:28px; margin-bottom:12px">
+                        <div class="col-icon red">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/>
+                            </svg>
+                        </div>
+                        No incluye (exclusiones)
+                    </h3>
+                    <div class="exclusiones-list" id="exclusionesList"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         FOOTER CTA
+         ===================================================== -->
+    <section class="footer-cta" id="footer">
+        <div class="container">
+            <div class="center-col">
+                <div class="footer-oh-logo">OH</div>
+                <h2 class="footer-title">¿Listo para construir<br><em>OurHome</em> juntos?</h2>
+                <p class="footer-desc">Esta propuesta está vigente por <strong>90 días calendario</strong> desde el 10 de noviembre de 2026. Contáctanos para iniciar.</p>
+
+                <div class="footer-actions">
+                    <a class="btn-primary large" href="mailto:contacto@ourhome.co">Escribir al equipo</a>
+                    <a class="btn-ghost large" href="https://wa.me/573001234567?text=Hola,%20quiero%20hablar%20sobre%20la%20propuesta%20OurHome" target="_blank" rel="noopener">WhatsApp</a>
+                </div>
+
+                <div class="footer-doc-info">
+                    <div class="footer-doc-item">
+                        <div class="footer-doc-label">Documento</div>
+                        <div class="footer-doc-val">No. 001-2026</div>
+                    </div>
+                    <div class="footer-doc-item">
+                        <div class="footer-doc-label">Fecha</div>
+                        <div class="footer-doc-val">Nov 10, 2026</div>
+                    </div>
+                    <div class="footer-doc-item">
+                        <div class="footer-doc-label">Vigencia</div>
+                        <div class="footer-doc-val">90 días</div>
+                    </div>
+                    <div class="footer-doc-item">
+                        <div class="footer-doc-label">Versión</div>
+                        <div class="footer-doc-val">1.0</div>
+                    </div>
+                    <div class="footer-doc-item">
+                        <div class="footer-doc-label">TRM</div>
+                        <div class="footer-doc-val">$3,160 COP/USD</div>
+                    </div>
+                    <div class="footer-doc-item">
+                        <div class="footer-doc-label">Total</div>
+                        <div class="footer-doc-val" data-total>$27,997,600 COP</div>
+                    </div>
+                </div>
+
+                <div class="footer-meta">
+                    <span>OurHome · Bogotá, Colombia · 2026</span>
+                    <span>Propuesta Económica No. 001-2026</span>
+                    <span>Versión 1.0</span>
+                </div>
             </div>
         </div>
     </section>

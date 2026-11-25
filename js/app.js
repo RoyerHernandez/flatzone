@@ -1,33 +1,36 @@
 /**
- * FlatZone App v2 — Single-page proposal
+ * OurHome — App v1
+ * Propuesta Económica No. 001-2026
  */
 
-const FZApp = {
-    charts: {},
+const OHApp = {
 
     init() {
         this.setupNav();
-        this.renderKPIs();
-        this.renderInversion();
-        this.renderScenarios();
-        this.renderCosts();
+        this.renderHero();
+        this.renderResumen();
+        this.renderModulos();
+        this.renderStack();
         this.renderCronograma();
-        this.renderMilestones();
-        this.animateHeroStats();
+        this.renderEquipo();
+        this.renderComparativo();
+        this.renderEntregables();
+        this.animateHeroCounters();
         this.setupScrollEffects();
         this.setupIntersectionObserver();
     },
 
     update() {
-        this.renderKPIs();
-        this.renderInversion();
-        this.renderScenarios();
-        this.renderCosts();
-        this.updateHeroStatsCurrency();
-        // Redraw charts
-        this.drawFlowChart();
-        this.drawYearChart();
-        this.drawInvChart();
+        // Update all price-dependent elements
+        document.querySelectorAll('[data-price-usd]').forEach(el => {
+            const usd = parseFloat(el.dataset.priceUsd);
+            el.textContent = OH.fmt(usd);
+        });
+        document.querySelectorAll('[data-total]').forEach(el => {
+            el.textContent = OH.fmtTotal();
+        });
+        // Re-render comparativo bars
+        this.renderComparativoRows();
     },
 
     // =============================================
@@ -35,18 +38,16 @@ const FZApp = {
     // =============================================
     setupNav() {
         const nav = document.getElementById('nav');
-        const links = document.querySelectorAll('.nav-links a');
+        const sections = ['hero','resumen','modulos','stack','cronograma','comparativo','entregables'];
 
         window.addEventListener('scroll', () => {
             nav.classList.toggle('scrolled', window.scrollY > 20);
-            // Active link highlight
-            const sections = ['hero','proyecto','inversion','proyeccion','cronograma'];
             let current = 'hero';
             sections.forEach(id => {
                 const el = document.getElementById(id);
-                if (el && window.scrollY >= el.offsetTop - 100) current = id;
+                if (el && window.scrollY >= el.offsetTop - 110) current = id;
             });
-            links.forEach(a => {
+            document.querySelectorAll('.nav-links a').forEach(a => {
                 const href = a.getAttribute('href').replace('#','');
                 a.classList.toggle('active', href === current);
             });
@@ -54,318 +55,242 @@ const FZApp = {
     },
 
     // =============================================
-    // HERO STATS ANIMATION
+    // HERO COUNTERS
     // =============================================
-    animateHeroStats() {
-        const stats = document.querySelectorAll('.hstat-num');
-        stats.forEach(el => {
-            const target = parseFloat(el.dataset.target);
-            const suffix = el.dataset.suffix || '';
-            const isCurrency = el.dataset.currency !== undefined;
-            const val = isCurrency ? parseInt(el.dataset.currency) : target;
+    renderHero() {
+        // Stat items are static HTML, just ensure data- attributes are set
+    },
 
+    animateHeroCounters() {
+        const counters = document.querySelectorAll('.hstat-num[data-target]');
+        counters.forEach(el => {
+            const raw     = el.dataset.target;
+            const suffix  = el.dataset.suffix || '';
+            const prefix  = el.dataset.prefix || '';
+            const target  = parseFloat(raw);
+            const isFloat = raw.includes('.');
+            const duration = 1800;
             let start = null;
-            const duration = 1600;
 
             const step = (ts) => {
                 if (!start) start = ts;
-                const p = Math.min((ts - start) / duration, 1);
+                const p    = Math.min((ts - start) / duration, 1);
                 const ease = 1 - Math.pow(1 - p, 3);
-                if (isCurrency) {
-                    el.textContent = fmt(Math.round(val * ease), true);
-                } else {
-                    const cur = (val * ease);
-                    el.textContent = Number.isInteger(target)
-                        ? Math.round(cur) + suffix
-                        : cur.toFixed(1) + suffix;
-                }
+                const cur  = target * ease;
+                el.textContent = prefix + (isFloat ? cur.toFixed(1) : Math.round(cur).toLocaleString('en-US')) + suffix;
                 if (p < 1) requestAnimationFrame(step);
             };
-            setTimeout(() => requestAnimationFrame(step), 300);
+            setTimeout(() => requestAnimationFrame(step), 400);
         });
     },
 
-    updateHeroStatsCurrency() {
-        const el = document.querySelector('.hstat-num[data-currency]');
-        if (el) el.textContent = fmt(FZ.flujoNeto(), true);
+    // =============================================
+    // RESUMEN — FLUJOS
+    // =============================================
+    renderResumen() {
+        const flujoTypes = ['comprador','vendedor','admin'];
+        flujoTypes.forEach(tipo => {
+            const container = document.getElementById('flujo-' + tipo);
+            if (!container) return;
+            const steps = OH.flujos[tipo];
+            container.innerHTML = steps.map((s, i) => `
+                <div class="flow-step fade-up" style="transition-delay:${i * 80}ms">
+                    <div class="flow-step-num">${s.paso}</div>
+                    <div class="flow-step-info">
+                        <div class="flow-step-accion">${s.accion}</div>
+                        <div class="flow-step-detalle">${s.detalle}</div>
+                    </div>
+                </div>
+                ${i < steps.length - 1 ? '<div class="flow-arrow">→</div>' : ''}
+            `).join('');
+        });
     },
 
     // =============================================
-    // KPIs
+    // MÓDULOS
     // =============================================
-    renderKPIs() {
-        const container = document.getElementById('kpisRow');
+    renderModulos() {
+        const container = document.getElementById('modulosGrid');
         if (!container) return;
-        const data = [
-            { label: 'Inversión Total',      val: fmt(FZ.totalInv(), true), sub: 'Capex inicial',           c: 'c-orange' },
-            { label: 'Ingreso Mensual',       val: fmt(FZ.ingMensual(), true), sub: 'Ocupación mixta',      c: 'c-green'  },
-            { label: 'Costos Mensuales',      val: fmt(FZ.costoMensual(), true), sub: 'Operación completa', c: 'c-red'    },
-            { label: 'Flujo Neto / Mes',      val: fmt(FZ.flujoNeto(), true), sub: 'Ing. − Costos',         c: 'c-blue'   },
-            { label: 'ROI Anual',             val: FZ.roi() + '%', sub: 'Retorno anualizado',               c: 'c-yellow' },
-        ];
-        container.innerHTML = data.map(d => `
-            <div class="kpi-card ${d.c} fade-up">
-                <div class="kpi-card-label">${d.label}</div>
-                <div class="kpi-card-val">${d.val}</div>
-                <div class="kpi-card-sub">${d.sub}</div>
+        container.innerHTML = OH.servicios.map((s, i) => `
+            <div class="modulo-card fade-up" style="transition-delay:${(i % 3) * 80}ms; --mod-color:${s.color}">
+                <div class="modulo-card-top">
+                    <div class="modulo-num">${String(s.id).padStart(2,'0')}</div>
+                    <div class="modulo-icon" style="background:${s.color}15; color:${s.color}">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="${s.icon}"/>
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="modulo-name">${s.nombre}</h3>
+                <p class="modulo-desc">${s.desc}</p>
+                <div class="modulo-price-row">
+                    <span class="modulo-price-usd" data-price-usd="${s.usd}">${OH.fmt(s.usd)}</span>
+                    <span class="modulo-price-label">módulo ${s.id} de 7</span>
+                </div>
             </div>
         `).join('');
     },
 
     // =============================================
-    // INVERSIÓN
+    // STACK
     // =============================================
-    renderInversion() {
-        const totalEl = document.getElementById('invTotalVal');
-        if (totalEl) totalEl.textContent = fmt(FZ.totalInv());
-
-        const breakdown = document.getElementById('invBreakdown');
-        if (!breakdown) return;
-
-        const total = FZ.totalInv();
-        breakdown.innerHTML = FZ.inversion.map(cat => {
-            const catTotal = cat.items.reduce((s,i) => s + i.v, 0);
-            const pct = Math.round((catTotal / total) * 100);
-            return `
-            <div class="inv-category open">
-                <div class="inv-cat-header" onclick="this.parentElement.classList.toggle('open')">
-                    <span class="inv-cat-name">${cat.cat}</span>
-                    <span style="display:flex;align-items:center;gap:8px">
-                        <span class="inv-cat-amount">${fmt(catTotal, true)}</span>
-                        <span class="inv-cat-toggle">▾</span>
-                    </span>
-                </div>
-                <div class="inv-cat-bar">
-                    <div class="inv-cat-bar-fill" style="width:${pct}%;background:${cat.color}"></div>
-                </div>
-                <div class="inv-cat-items">
-                    ${cat.items.map(i => `
-                    <div class="inv-item">
-                        <span class="inv-item-name">${i.n}</span>
-                        <span class="inv-item-val">${fmt(i.v)}</span>
-                    </div>`).join('')}
-                </div>
-            </div>`;
-        }).join('');
-
-        this.drawInvChart();
-    },
-
-    drawInvChart() {
-        const el = document.getElementById('chartInv');
-        if (!el) return;
-        if (this.charts.inv) this.charts.inv.destroy();
-        const total = FZ.totalInv();
-        const labels = FZ.inversion.map(c => c.cat);
-        const data   = FZ.inversion.map(c => c.items.reduce((s,i) => s+i.v, 0));
-        const colors = FZ.inversion.map(c => c.color);
-
-        // Legend
-        const leg = document.getElementById('invLegend');
-        if (leg) {
-            leg.innerHTML = FZ.inversion.map((c, idx) => {
-                const v = data[idx];
-                const pct = Math.round(v/total*100);
-                return `<div class="inv-legend-item">
-                    <div class="inv-legend-dot" style="background:${c.color}"></div>
-                    <span>${c.cat} — ${fmt(v, true)} (${pct}%)</span>
-                </div>`;
-            }).join('');
-        }
-
-        this.charts.inv = new Chart(el, {
-            type: 'doughnut',
-            data: {
-                labels,
-                datasets: [{ data, backgroundColor: colors, borderColor: '#152236', borderWidth: 3 }]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: true, cutout: '68%',
-                plugins: { legend: { display: false } }
-            }
-        });
-    },
-
-    // =============================================
-    // ESCENARIOS
-    // =============================================
-    renderScenarios() {
-        const container = document.getElementById('scenariosRow');
+    renderStack() {
+        const container = document.getElementById('stackGrid');
         if (!container) return;
-        const esc = [
-            { label: 'Pesimista', badge: 'pess',  factor: 0.65, titulo: 'Ocupación 65%' },
-            { label: 'Base',      badge: 'base-b', factor: null, titulo: 'Ocupación mixta' },
-            { label: 'Optimista', badge: 'opt',    factor: 0.95, titulo: 'Ocupación 95%' },
-        ];
-        container.innerHTML = esc.map(e => {
-            const ing = e.factor ? FZ.ingMensual(e.factor) : FZ.ingMensual();
-            const flu = ing - FZ.costoMensual();
-            const isBase = e.label === 'Base';
-            return `
-            <div class="scenario-card ${isBase ? 'base' : ''}">
-                <span class="sc-badge ${e.badge}">${e.label}</span>
-                <div class="sc-title">${e.titulo}</div>
-                <div class="sc-label">Flujo mensual proyectado</div>
-                <div class="sc-val">${fmt(flu, true)}</div>
-                <div class="sc-subdesc">${fmt(ing, true)}/mes ingresos</div>
-            </div>`;
-        }).join('');
-
-        this.drawFlowChart();
-        this.drawYearChart();
-    },
-
-    drawFlowChart() {
-        const el = document.getElementById('chartFlow');
-        if (!el) return;
-        if (this.charts.flow) this.charts.flow.destroy();
-        const ing = FZ.ingMensual();
-        const cos = FZ.costoMensual();
-        const flu = FZ.flujoNeto();
-        this.charts.flow = new Chart(el, {
-            type: 'bar',
-            data: {
-                labels: ['Ingresos', 'Costos', 'Flujo Neto'],
-                datasets: [{
-                    data: [ing, cos, flu],
-                    backgroundColor: ['rgba(5,150,105,0.85)', 'rgba(220,38,38,0.8)', 'rgba(37,99,235,0.85)'],
-                    borderRadius: 10,
-                    borderSkipped: false,
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { ticks: { color: '#6B7280', font: { size: 11 } }, grid: { display: false } },
-                    y: { beginAtZero: true, ticks: { color: '#6B7280', font: { size: 11 }, callback: v => fmt(v, true) }, grid: { color: '#F3F4F6' }, border: { display: false } }
-                }
-            }
-        });
-    },
-
-    drawYearChart() {
-        const el = document.getElementById('chartYear');
-        if (!el) return;
-        if (this.charts.year) this.charts.year.destroy();
-        const base = FZ.ingMensual();
-        const costos = FZ.costoMensual();
-        const ramp = [0.55, 0.65, 0.75, 0.82, 0.88, 0.92, 0.95, 0.97, 1.0, 1.0, 1.02, 1.04];
-        const months = ['E','F','M','A','M','J','J','A','S','O','N','D'];
-        this.charts.year = new Chart(el, {
-            type: 'line',
-            data: {
-                labels: months,
-                datasets: [
-                    {
-                        label: 'Ingresos',
-                        data: ramp.map(r => Math.round(base * r)),
-                        borderColor: '#059669',
-                        backgroundColor: 'rgba(5,150,105,0.06)',
-                        fill: true, tension: 0.4, pointRadius: 3,
-                        pointBackgroundColor: '#059669', borderWidth: 2
-                    },
-                    {
-                        label: 'Costos',
-                        data: months.map(() => costos),
-                        borderColor: '#DC2626',
-                        borderDash: [6, 4],
-                        fill: false, tension: 0, pointRadius: 0, borderWidth: 1.5
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { labels: { color: '#6B7280', font: { size: 11 }, boxWidth: 12, padding: 16 } } },
-                scales: {
-                    x: { ticks: { color: '#6B7280', font: { size: 11 } }, grid: { display: false } },
-                    y: { ticks: { color: '#6B7280', font: { size: 11 }, callback: v => fmt(v, true) }, grid: { color: '#F3F4F6' }, border: { display: false } }
-                }
-            }
-        });
-    },
-
-    // =============================================
-    // COSTOS
-    // =============================================
-    renderCosts() {
-        const totalEl = document.getElementById('costTotal');
-        if (totalEl) totalEl.textContent = fmt(FZ.costoMensual()) + '/mes';
-
-        const container = document.getElementById('costBars');
-        if (!container) return;
-        const total = FZ.costoMensual();
-        const catMap = { fixed: 'fixed', variable: 'variable', mgmt: 'mgmt', reserve: 'reserve' };
-        container.innerHTML = FZ.costos.map(c => {
-            const pct = Math.round((c.v / total) * 100);
-            const cls = catMap[c.cat] || 'fixed';
-            return `
-            <div class="cost-bar-row fade-up">
-                <div class="cbar-label">${c.n}</div>
-                <div class="cbar-wrap">
-                    <div class="cbar-fill ${cls}" style="width:0" data-width="${Math.max(pct * 2.8, 2)}%"></div>
+        container.innerHTML = OH.stack.map((cat, ci) => `
+            <div class="stack-cat fade-up" style="transition-delay:${ci * 80}ms">
+                <div class="stack-cat-header">
+                    <span class="stack-cat-tag" style="background:${cat.color}18;color:${cat.color}">${cat.cat}</span>
                 </div>
-                <div class="cbar-val">${fmt(c.v, true)}</div>
-            </div>`;
-        }).join('');
-
-        // Animate bars after paint
-        requestAnimationFrame(() => {
-            document.querySelectorAll('.cbar-fill').forEach(bar => {
-                setTimeout(() => { bar.style.width = bar.dataset.width; }, 200);
-            });
-        });
+                <div class="stack-items">
+                    ${cat.items.map(item => `
+                        <div class="stack-item">
+                            <div class="stack-item-dot" style="background:${cat.color}"></div>
+                            <div class="stack-item-info">
+                                <div class="stack-item-name">${item.n}</div>
+                                <div class="stack-item-desc">${item.desc}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('');
     },
 
     // =============================================
     // CRONOGRAMA
     // =============================================
     renderCronograma() {
-        const container = document.getElementById('timelineRow');
+        const container = document.getElementById('cronogramaRow');
         if (!container) return;
-        container.innerHTML = FZ.fases.map((f, i) => {
-            const dotClass = f.estado;
-            const dotLabel = f.estado === 'done' ? '✓' : f.estado === 'active' ? '▶' : i + 1;
+        container.innerHTML = OH.fases.map((f, i) => `
+            <div class="fase-card fade-up" style="transition-delay:${i * 100}ms; --fase-color:${f.color}">
+                <div class="fase-header">
+                    <div class="fase-dot" style="background:${f.color}">${i + 1}</div>
+                    <div class="fase-semanas">${f.semanas}</div>
+                </div>
+                <h3 class="fase-name">${f.n}</h3>
+                <ul class="fase-tareas">
+                    ${f.tareas.map(t => `<li>${t}</li>`).join('')}
+                </ul>
+            </div>
+        `).join('');
+    },
+
+    // =============================================
+    // EQUIPO
+    // =============================================
+    renderEquipo() {
+        const container = document.getElementById('equipoGrid');
+        if (!container) return;
+        container.innerHTML = OH.equipo.map((m, i) => `
+            <div class="equipo-card fade-up" style="transition-delay:${i * 100}ms">
+                <div class="equipo-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="${m.icon}"/>
+                    </svg>
+                </div>
+                <h3 class="equipo-rol">${m.rol}</h3>
+                <ul class="equipo-resp">
+                    ${m.resp.map(r => `<li>${r}</li>`).join('')}
+                </ul>
+            </div>
+        `).join('');
+    },
+
+    // =============================================
+    // COMPARATIVO
+    // =============================================
+    renderComparativo() {
+        this.renderComparativoRows();
+    },
+
+    renderComparativoRows() {
+        const container = document.getElementById('comparativoTable');
+        if (!container) return;
+        container.innerHTML = OH.comparativo.map((row, i) => {
+            const mktMid = (row.mktMin + row.mktMax) / 2;
+            const saving = Math.round(((mktMid - row.oh) / mktMid) * 100);
+            const barW   = Math.round((row.oh / row.mktMax) * 100);
+            const ohStr  = OH.fmt(row.oh);
+            const mktStr = '$' + row.mktMin.toLocaleString('en-US') + '–$' + row.mktMax.toLocaleString('en-US') + ' USD';
+
             return `
-            <div class="tl-phase fade-up">
-                <div class="tl-dot ${dotClass}">${dotLabel}</div>
-                <div class="tl-phase-num">Fase ${i + 1}</div>
-                <div class="tl-phase-name">${f.n}</div>
-                <div class="tl-phase-period">${f.periodo}</div>
-                <div class="tl-tasks">
-                    ${f.tareas.map(t => `<span class="tl-task ${t.s}">${t.n}</span>`).join('')}
+            <div class="comp-row fade-up" style="transition-delay:${i * 60}ms">
+                <div class="comp-concepto">${row.concepto}</div>
+                <div class="comp-mercado">${mktStr}</div>
+                <div class="comp-oh">
+                    <div class="comp-oh-wrap">
+                        <div class="comp-bar-bg">
+                            <div class="comp-bar-fill" data-width="${barW}%" style="width:0%"></div>
+                        </div>
+                        <span class="comp-oh-price" data-price-usd="${row.oh}">${ohStr}</span>
+                    </div>
+                </div>
+                <div class="comp-saving">
+                    <span class="comp-saving-badge">−${saving}%</span>
                 </div>
             </div>`;
         }).join('');
+
+        // Animate bars
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                document.querySelectorAll('.comp-bar-fill').forEach(bar => {
+                    bar.style.width = bar.dataset.width;
+                });
+            }, 300);
+        });
     },
 
-    renderMilestones() {
-        const container = document.getElementById('milestones');
-        if (!container) return;
-        const icons = { done: '✓', active: '▶', pending: '○' };
-        container.innerHTML = FZ.milestones.map(m => `
-            <div class="milestone-row fade-up">
-                <div class="ms-icon ${m.s === 'done' ? 'done' : m.s === 'active' ? 'active' : 'pend'}">
-                    ${m.s === 'done' ? '✅' : m.s === 'active' ? '🔄' : '📌'}
+    // =============================================
+    // ENTREGABLES + FUTURAS
+    // =============================================
+    renderEntregables() {
+        const entContainer = document.getElementById('entregablesList');
+        if (entContainer) {
+            entContainer.innerHTML = OH.entregables.map((e, i) => `
+                <div class="entregable-item fade-up" style="transition-delay:${i * 50}ms">
+                    <div class="entregable-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="${e.icon}"/>
+                        </svg>
+                    </div>
+                    <span>${e.texto}</span>
                 </div>
-                <div class="ms-info">
-                    <div class="ms-name">${m.n}</div>
-                    <div class="ms-desc">${m.desc}</div>
+            `).join('');
+        }
+
+        const futContainer = document.getElementById('futurasList');
+        if (futContainer) {
+            futContainer.innerHTML = OH.futuras.map((f, i) => `
+                <div class="futura-item fade-up" style="transition-delay:${i * 40}ms">
+                    <span class="futura-plus">+</span>
+                    <span>${f}</span>
                 </div>
-                <div class="ms-date">${m.fecha}</div>
-                <span class="ms-badge ${m.s}">${m.s === 'done' ? 'Completado' : m.s === 'active' ? 'En curso' : 'Pendiente'}</span>
-            </div>`).join('');
+            `).join('');
+        }
+
+        const exclContainer = document.getElementById('exclusionesList');
+        if (exclContainer) {
+            exclContainer.innerHTML = OH.exclusiones.map(e => `
+                <div class="excl-item">
+                    <span class="excl-dash">—</span>
+                    <span>${e}</span>
+                </div>
+            `).join('');
+        }
     },
 
     // =============================================
     // SCROLL EFFECTS
     // =============================================
     setupScrollEffects() {
-        // parallax subtle on hero shapes
         window.addEventListener('scroll', () => {
             const y = window.scrollY;
             document.querySelectorAll('.hero-shape').forEach((s, i) => {
-                s.style.transform = `translateY(${y * (0.08 + i * 0.04)}px)`;
+                s.style.transform = `translateY(${y * (0.06 + i * 0.03)}px)`;
             });
         }, { passive: true });
     },
@@ -375,18 +300,24 @@ const FZApp = {
             entries.forEach(e => {
                 if (e.isIntersecting) {
                     e.target.classList.add('visible');
+                    // Trigger bar animations when comparativo is visible
+                    if (e.target.classList.contains('comp-row')) {
+                        const bar = e.target.querySelector('.comp-bar-fill');
+                        if (bar) {
+                            setTimeout(() => { bar.style.width = bar.dataset.width; }, 150);
+                        }
+                    }
                     observer.unobserve(e.target);
                 }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
 
-        // Observe all fade-up elements (delayed re-check for dynamically added ones)
         const observe = () => {
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
         };
         observe();
-        setTimeout(observe, 500);
-    }
+        setTimeout(observe, 600);
+    },
 };
 
-window.addEventListener('DOMContentLoaded', () => FZApp.init());
+window.addEventListener('DOMContentLoaded', () => OHApp.init());
